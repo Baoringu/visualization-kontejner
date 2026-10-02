@@ -1,0 +1,31 @@
+[project]
+name = "pallet-building-api"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+  "alembic>=1.14,<2",
+  "argon2-cffi>=23.1,<26",
+  "celery[redis]>=5.4,<6",
+  "fastapi>=0.115,<1",
+  "email-validator>=2.2,<3",
+  "pydantic-settings>=2.6,<3",
+  "psycopg[binary]>=3.2,<4",
+  "sqlalchemy>=2.0,<3",
+  "uvicorn[standard]>=0.32,<1",
+]
+
+[project.optional-dependencies]
+test = ["httpx>=0.28,<1", "pytest>=8.3,<9", "pytest-asyncio>=0.24,<1", "ruff>=0.16,<0.17", "mypy>=1.20,<1.21"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint.per-file-ignores]
+"src/app/main.py" = ["B008"]
+"src/app/planning.py" = ["B008"]
+"src/app/dependencies.py" = ["B008"]
+"src/app/models.py" = ["RUF012"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

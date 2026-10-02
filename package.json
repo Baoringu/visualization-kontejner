@@ -1,0 +1,15 @@
+{
+  "name": "pallet-building",
+  "private": true,
+  "packageManager": "pnpm@10.17.0",
+  "scripts": {
+    "web:dev": "pnpm --dir apps/web dev",
+    "web:lint": "pnpm --dir apps/web lint",
+    "web:typecheck": "pnpm --dir apps/web typecheck",
+    "web:build": "pnpm --dir apps/web build",
+    "api:openapi": "PYTHONPATH=apps/api/src python3 apps/api/scripts/export_openapi.py",
+    "api:test": "PYTHONPATH=apps/api/src pytest apps/api/tests",
+    "contract:generate": "openapi-typescript apps/web/src/lib/api/openapi.json -o apps/web/src/lib/api/schema.d.ts"
+  },
+  "devDependencies": { "openapi-typescript": "^7.9.1" }
+}

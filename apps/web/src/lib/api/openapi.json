@@ -1,0 +1,2987 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Pallet Building API",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/api/v1/packaging-units/{unit_id}/verify": {
+      "post": {
+        "tags": [
+          "planning"
+        ],
+        "summary": "Verify Packaging",
+        "operationId": "verify_packaging_api_v1_packaging_units__unit_id__verify_post",
+        "parameters": [
+          {
+            "name": "unit_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Unit Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PackagingVerification"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PackagingUnitOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/pallet-types": {
+      "get": {
+        "tags": [
+          "planning"
+        ],
+        "summary": "List Pallet Types",
+        "operationId": "list_pallet_types_api_v1_pallet_types_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/PalletTypeOut"
+                  },
+                  "type": "array",
+                  "title": "Response List Pallet Types Api V1 Pallet Types Get"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "planning"
+        ],
+        "summary": "Create Pallet Type",
+        "operationId": "create_pallet_type_api_v1_pallet_types_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PalletTypeCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PalletTypeOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/shipments/{shipment_id}/preflight": {
+      "post": {
+        "tags": [
+          "planning"
+        ],
+        "summary": "Preflight",
+        "operationId": "preflight_api_v1_shipments__shipment_id__preflight_post",
+        "parameters": [
+          {
+            "name": "shipment_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Shipment Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PreflightRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PreflightOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/shipments/{shipment_id}/runs": {
+      "post": {
+        "tags": [
+          "planning"
+        ],
+        "summary": "Create Run",
+        "operationId": "create_run_api_v1_shipments__shipment_id__runs_post",
+        "parameters": [
+          {
+            "name": "shipment_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Shipment Id"
+            }
+          },
+          {
+            "name": "idempotency-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 200,
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RunCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "planning"
+        ],
+        "summary": "List Runs",
+        "operationId": "list_runs_api_v1_shipments__shipment_id__runs_get",
+        "parameters": [
+          {
+            "name": "shipment_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Shipment Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RunOut"
+                  },
+                  "title": "Response List Runs Api V1 Shipments  Shipment Id  Runs Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/runs/{run_id}": {
+      "get": {
+        "tags": [
+          "planning"
+        ],
+        "summary": "Get Run",
+        "operationId": "get_run_api_v1_runs__run_id__get",
+        "parameters": [
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Run Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/plans/{plan_id}": {
+      "get": {
+        "tags": [
+          "planning"
+        ],
+        "summary": "Get Plan",
+        "operationId": "get_plan_api_v1_plans__plan_id__get",
+        "parameters": [
+          {
+            "name": "plan_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Plan Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlanOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/health/live": {
+      "get": {
+        "tags": [
+          "health"
+        ],
+        "summary": "Live",
+        "operationId": "live_api_v1_health_live_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/health/ready": {
+      "get": {
+        "tags": [
+          "health"
+        ],
+        "summary": "Ready",
+        "operationId": "ready_api_v1_health_ready_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/login": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Login",
+        "operationId": "login_api_v1_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/logout": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Logout",
+        "operationId": "logout_api_v1_auth_logout_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/me": {
+      "get": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Me",
+        "operationId": "me_api_v1_me_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/products": {
+      "get": {
+        "tags": [
+          "catalog"
+        ],
+        "summary": "List Products",
+        "operationId": "list_products_api_v1_products_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ProductOut"
+                  },
+                  "type": "array",
+                  "title": "Response List Products Api V1 Products Get"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "catalog"
+        ],
+        "summary": "Create Product",
+        "operationId": "create_product_api_v1_products_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/packaging-units": {
+      "get": {
+        "tags": [
+          "catalog"
+        ],
+        "summary": "List Packaging Units",
+        "operationId": "list_packaging_units_api_v1_packaging_units_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/PackagingUnitOut"
+                  },
+                  "type": "array",
+                  "title": "Response List Packaging Units Api V1 Packaging Units Get"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "catalog"
+        ],
+        "summary": "Create Packaging Unit",
+        "operationId": "create_packaging_unit_api_v1_packaging_units_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PackagingUnitCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PackagingUnitOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/customers": {
+      "get": {
+        "tags": [
+          "customers"
+        ],
+        "summary": "List Customers",
+        "operationId": "list_customers_api_v1_customers_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/CustomerOut"
+                  },
+                  "type": "array",
+                  "title": "Response List Customers Api V1 Customers Get"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "customers"
+        ],
+        "summary": "Create Customer",
+        "operationId": "create_customer_api_v1_customers_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/customers/{customer_id}": {
+      "put": {
+        "tags": [
+          "customers"
+        ],
+        "summary": "Update Customer",
+        "operationId": "update_customer_api_v1_customers__customer_id__put",
+        "parameters": [
+          {
+            "name": "customer_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Customer Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/orders": {
+      "get": {
+        "tags": [
+          "orders"
+        ],
+        "summary": "List Orders",
+        "operationId": "list_orders_api_v1_orders_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/OrderOut"
+                  },
+                  "type": "array",
+                  "title": "Response List Orders Api V1 Orders Get"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "orders"
+        ],
+        "summary": "Create Order",
+        "operationId": "create_order_api_v1_orders_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/orders/{order_id}": {
+      "get": {
+        "tags": [
+          "orders"
+        ],
+        "summary": "Get Order",
+        "operationId": "get_order_api_v1_orders__order_id__get",
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Order Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderDetailOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/orders/{order_id}/cart": {
+      "put": {
+        "tags": [
+          "orders"
+        ],
+        "summary": "Replace Cart",
+        "operationId": "replace_cart_api_v1_orders__order_id__cart_put",
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Order Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CartReplace"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderDetailOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/orders/{order_id}/lines": {
+      "post": {
+        "tags": [
+          "orders"
+        ],
+        "summary": "Add Order Line",
+        "operationId": "add_order_line_api_v1_orders__order_id__lines_post",
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Order Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderLineCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderLineOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/orders/{order_id}/shipments": {
+      "post": {
+        "tags": [
+          "shipments"
+        ],
+        "summary": "Create Shipment",
+        "operationId": "create_shipment_api_v1_orders__order_id__shipments_post",
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Order Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ShipmentCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShipmentOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/shipments": {
+      "get": {
+        "tags": [
+          "shipments"
+        ],
+        "summary": "List Shipments",
+        "operationId": "list_shipments_api_v1_shipments_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ShipmentOut"
+                  },
+                  "type": "array",
+                  "title": "Response List Shipments Api V1 Shipments Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/probe": {
+      "get": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Admin Probe",
+        "operationId": "admin_probe_api_v1_admin_probe_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CartLineWrite": {
+        "properties": {
+          "packaging_unit_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Packaging Unit Id"
+          },
+          "quantity_cartons": {
+            "type": "integer",
+            "maximum": 5000.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Quantity Cartons"
+          }
+        },
+        "type": "object",
+        "required": [
+          "packaging_unit_id",
+          "quantity_cartons"
+        ],
+        "title": "CartLineWrite"
+      },
+      "CartReplace": {
+        "properties": {
+          "expected_revision": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Expected Revision"
+          },
+          "lines": {
+            "items": {
+              "$ref": "#/components/schemas/CartLineWrite"
+            },
+            "type": "array",
+            "maxItems": 200,
+            "title": "Lines"
+          }
+        },
+        "type": "object",
+        "required": [
+          "expected_revision",
+          "lines"
+        ],
+        "title": "CartReplace"
+      },
+      "CustomerCreate": {
+        "properties": {
+          "external_ref": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "External Ref"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Name"
+          },
+          "contact_name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Contact Name"
+          },
+          "contact_email": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "email"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Contact Email"
+          },
+          "contact_phone": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Contact Phone"
+          },
+          "ship_to_name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ship To Name"
+          },
+          "ship_to_address_line1": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ship To Address Line1"
+          },
+          "ship_to_address_line2": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ship To Address Line2"
+          },
+          "ship_to_city": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 120
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ship To City"
+          },
+          "ship_to_postal_code": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 30
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ship To Postal Code"
+          },
+          "ship_to_country_code": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2,
+                "minLength": 2,
+                "pattern": "^[A-Z]{2}$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ship To Country Code"
+          },
+          "delivery_instructions": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 1000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Delivery Instructions"
+          }
+        },
+        "type": "object",
+        "required": [
+          "external_ref",
+          "name"
+        ],
+        "title": "CustomerCreate"
+      },
+      "CustomerOut": {
+        "properties": {
+          "external_ref": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "External Ref"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Name"
+          },
+          "contact_name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Contact Name"
+          },
+          "contact_email": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "email"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Contact Email"
+          },
+          "contact_phone": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Contact Phone"
+          },
+          "ship_to_name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ship To Name"
+          },
+          "ship_to_address_line1": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ship To Address Line1"
+          },
+          "ship_to_address_line2": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ship To Address Line2"
+          },
+          "ship_to_city": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 120
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ship To City"
+          },
+          "ship_to_postal_code": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 30
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ship To Postal Code"
+          },
+          "ship_to_country_code": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2,
+                "minLength": 2,
+                "pattern": "^[A-Z]{2}$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ship To Country Code"
+          },
+          "delivery_instructions": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 1000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Delivery Instructions"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "revision": {
+            "type": "integer",
+            "title": "Revision"
+          }
+        },
+        "type": "object",
+        "required": [
+          "external_ref",
+          "name",
+          "id",
+          "revision"
+        ],
+        "title": "CustomerOut"
+      },
+      "CustomerUpdate": {
+        "properties": {
+          "external_ref": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "External Ref"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Name"
+          },
+          "contact_name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Contact Name"
+          },
+          "contact_email": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "email"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Contact Email"
+          },
+          "contact_phone": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Contact Phone"
+          },
+          "ship_to_name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ship To Name"
+          },
+          "ship_to_address_line1": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ship To Address Line1"
+          },
+          "ship_to_address_line2": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ship To Address Line2"
+          },
+          "ship_to_city": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 120
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ship To City"
+          },
+          "ship_to_postal_code": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 30
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ship To Postal Code"
+          },
+          "ship_to_country_code": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2,
+                "minLength": 2,
+                "pattern": "^[A-Z]{2}$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ship To Country Code"
+          },
+          "delivery_instructions": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 1000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Delivery Instructions"
+          },
+          "expected_revision": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Expected Revision"
+          }
+        },
+        "type": "object",
+        "required": [
+          "external_ref",
+          "name",
+          "expected_revision"
+        ],
+        "title": "CustomerUpdate"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "HealthOut": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "service": {
+            "type": "string",
+            "title": "Service"
+          },
+          "database": {
+            "type": "string",
+            "title": "Database"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "service",
+          "database"
+        ],
+        "title": "HealthOut"
+      },
+      "InstructionOut": {
+        "properties": {
+          "sequence_no": {
+            "type": "integer",
+            "title": "Sequence No"
+          },
+          "instance_id": {
+            "type": "string",
+            "title": "Instance Id"
+          },
+          "pallet_index": {
+            "type": "integer",
+            "title": "Pallet Index"
+          }
+        },
+        "type": "object",
+        "required": [
+          "sequence_no",
+          "instance_id",
+          "pallet_index"
+        ],
+        "title": "InstructionOut"
+      },
+      "LayoutCartonOut": {
+        "properties": {
+          "sku": {
+            "type": "string",
+            "title": "Sku"
+          },
+          "length_mm": {
+            "type": "integer",
+            "title": "Length Mm"
+          },
+          "width_mm": {
+            "type": "integer",
+            "title": "Width Mm"
+          },
+          "height_mm": {
+            "type": "integer",
+            "title": "Height Mm"
+          },
+          "mass_g": {
+            "type": "integer",
+            "title": "Mass G"
+          },
+          "top_load_limit_g": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Top Load Limit G"
+          },
+          "allowed_orientations": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Allowed Orientations"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "source_order_line_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Order Line Id"
+          },
+          "instance_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Instance Ids"
+          }
+        },
+        "type": "object",
+        "required": [
+          "sku",
+          "length_mm",
+          "width_mm",
+          "height_mm",
+          "mass_g",
+          "top_load_limit_g",
+          "allowed_orientations"
+        ],
+        "title": "LayoutCartonOut"
+      },
+      "LayoutOut": {
+        "properties": {
+          "scope": {
+            "type": "string",
+            "title": "Scope"
+          },
+          "placed": {
+            "items": {
+              "$ref": "#/components/schemas/PlacementOut"
+            },
+            "type": "array",
+            "title": "Placed"
+          },
+          "unplaced": {
+            "items": {
+              "$ref": "#/components/schemas/UnplacedOut"
+            },
+            "type": "array",
+            "title": "Unplaced"
+          },
+          "instructions": {
+            "items": {
+              "$ref": "#/components/schemas/InstructionOut"
+            },
+            "type": "array",
+            "title": "Instructions"
+          },
+          "requested_instances": {
+            "type": "integer",
+            "title": "Requested Instances"
+          },
+          "placed_instances": {
+            "type": "integer",
+            "title": "Placed Instances"
+          },
+          "unplaced_instances": {
+            "type": "integer",
+            "title": "Unplaced Instances"
+          },
+          "pallet_count": {
+            "type": "integer",
+            "title": "Pallet Count"
+          },
+          "pallet": {
+            "$ref": "#/components/schemas/LayoutPalletOut"
+          },
+          "carton": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/LayoutCartonOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "cartons": {
+            "items": {
+              "$ref": "#/components/schemas/LayoutCartonOut"
+            },
+            "type": "array",
+            "title": "Cartons"
+          },
+          "cargo_mass_g": {
+            "type": "integer",
+            "title": "Cargo Mass G"
+          },
+          "loaded_mass_g": {
+            "type": "integer",
+            "title": "Loaded Mass G"
+          },
+          "cargo_height_mm": {
+            "type": "integer",
+            "title": "Cargo Height Mm"
+          },
+          "loaded_height_mm": {
+            "type": "integer",
+            "title": "Loaded Height Mm"
+          },
+          "model_checks": {
+            "$ref": "#/components/schemas/ModelChecksOut"
+          },
+          "search": {
+            "$ref": "#/components/schemas/SearchOut"
+          }
+        },
+        "type": "object",
+        "required": [
+          "scope",
+          "placed",
+          "unplaced",
+          "instructions",
+          "requested_instances",
+          "placed_instances",
+          "unplaced_instances",
+          "pallet_count",
+          "pallet",
+          "cargo_mass_g",
+          "loaded_mass_g",
+          "cargo_height_mm",
+          "loaded_height_mm",
+          "model_checks",
+          "search"
+        ],
+        "title": "LayoutOut"
+      },
+      "LayoutPalletOut": {
+        "properties": {
+          "length_mm": {
+            "type": "integer",
+            "title": "Length Mm"
+          },
+          "width_mm": {
+            "type": "integer",
+            "title": "Width Mm"
+          },
+          "deck_height_mm": {
+            "type": "integer",
+            "title": "Deck Height Mm"
+          },
+          "max_total_height_mm": {
+            "type": "integer",
+            "title": "Max Total Height Mm"
+          },
+          "max_cargo_mass_g": {
+            "type": "integer",
+            "title": "Max Cargo Mass G"
+          },
+          "tare_mass_g": {
+            "type": "integer",
+            "title": "Tare Mass G"
+          },
+          "available_count": {
+            "type": "integer",
+            "title": "Available Count"
+          },
+          "support_model": {
+            "type": "string",
+            "title": "Support Model"
+          }
+        },
+        "type": "object",
+        "required": [
+          "length_mm",
+          "width_mm",
+          "deck_height_mm",
+          "max_total_height_mm",
+          "max_cargo_mass_g",
+          "tare_mass_g",
+          "available_count",
+          "support_model"
+        ],
+        "title": "LayoutPalletOut"
+      },
+      "LoginRequest": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email"
+          },
+          "password": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 8,
+            "title": "Password"
+          }
+        },
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "title": "LoginRequest"
+      },
+      "MeOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email"
+          },
+          "display_name": {
+            "type": "string",
+            "title": "Display Name"
+          },
+          "role": {
+            "type": "string",
+            "title": "Role"
+          },
+          "organization": {
+            "$ref": "#/components/schemas/OrganizationOut"
+          },
+          "csrf_token": {
+            "type": "string",
+            "title": "Csrf Token"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "email",
+          "display_name",
+          "role",
+          "organization",
+          "csrf_token"
+        ],
+        "title": "MeOut"
+      },
+      "MessageOut": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message"
+          }
+        },
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "title": "MessageOut"
+      },
+      "ModelChecksOut": {
+        "properties": {
+          "geometry": {
+            "type": "string",
+            "title": "Geometry"
+          },
+          "column_vertical_load": {
+            "type": "string",
+            "title": "Column Vertical Load"
+          },
+          "instruction_prefix": {
+            "type": "string",
+            "title": "Instruction Prefix",
+            "default": "not_evaluated"
+          },
+          "transport_dynamics": {
+            "type": "string",
+            "title": "Transport Dynamics"
+          }
+        },
+        "type": "object",
+        "required": [
+          "geometry",
+          "column_vertical_load",
+          "transport_dynamics"
+        ],
+        "title": "ModelChecksOut"
+      },
+      "OrderCreate": {
+        "properties": {
+          "order_ref": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Order Ref"
+          },
+          "customer_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Customer Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "order_ref",
+          "customer_id"
+        ],
+        "title": "OrderCreate"
+      },
+      "OrderDetailOut": {
+        "properties": {
+          "order_ref": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Order Ref"
+          },
+          "customer_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Customer Id"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "revision": {
+            "type": "integer",
+            "title": "Revision"
+          },
+          "lines": {
+            "items": {
+              "$ref": "#/components/schemas/OrderLineOut"
+            },
+            "type": "array",
+            "title": "Lines"
+          }
+        },
+        "type": "object",
+        "required": [
+          "order_ref",
+          "customer_id",
+          "id",
+          "status",
+          "revision",
+          "lines"
+        ],
+        "title": "OrderDetailOut"
+      },
+      "OrderLineCreate": {
+        "properties": {
+          "packaging_unit_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Packaging Unit Id"
+          },
+          "line_no": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Line No"
+          },
+          "quantity_units": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Quantity Units"
+          }
+        },
+        "type": "object",
+        "required": [
+          "packaging_unit_id",
+          "line_no",
+          "quantity_units"
+        ],
+        "title": "OrderLineCreate"
+      },
+      "OrderLineOut": {
+        "properties": {
+          "packaging_unit_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Packaging Unit Id"
+          },
+          "line_no": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Line No"
+          },
+          "quantity_units": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Quantity Units"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "allocated_units": {
+            "type": "integer",
+            "title": "Allocated Units"
+          }
+        },
+        "type": "object",
+        "required": [
+          "packaging_unit_id",
+          "line_no",
+          "quantity_units",
+          "id",
+          "allocated_units"
+        ],
+        "title": "OrderLineOut"
+      },
+      "OrderOut": {
+        "properties": {
+          "order_ref": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Order Ref"
+          },
+          "customer_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Customer Id"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "revision": {
+            "type": "integer",
+            "title": "Revision"
+          }
+        },
+        "type": "object",
+        "required": [
+          "order_ref",
+          "customer_id",
+          "id",
+          "status",
+          "revision"
+        ],
+        "title": "OrderOut"
+      },
+      "OrganizationOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "locale": {
+            "type": "string",
+            "title": "Locale"
+          },
+          "timezone": {
+            "type": "string",
+            "title": "Timezone"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "locale",
+          "timezone"
+        ],
+        "title": "OrganizationOut"
+      },
+      "PackagingUnitCreate": {
+        "properties": {
+          "product_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Product Id"
+          },
+          "code": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Code"
+          },
+          "units_per_package": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Units Per Package"
+          },
+          "length_mm": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Length Mm"
+          },
+          "width_mm": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Width Mm"
+          },
+          "height_mm": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Height Mm"
+          },
+          "mass_g": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Mass G"
+          }
+        },
+        "type": "object",
+        "required": [
+          "product_id",
+          "code",
+          "units_per_package",
+          "length_mm",
+          "width_mm",
+          "height_mm",
+          "mass_g"
+        ],
+        "title": "PackagingUnitCreate"
+      },
+      "PackagingUnitOut": {
+        "properties": {
+          "product_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Product Id"
+          },
+          "code": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Code"
+          },
+          "units_per_package": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Units Per Package"
+          },
+          "length_mm": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Length Mm"
+          },
+          "width_mm": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Width Mm"
+          },
+          "height_mm": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Height Mm"
+          },
+          "mass_g": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Mass G"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "revision": {
+            "type": "integer",
+            "title": "Revision"
+          },
+          "is_verified": {
+            "type": "boolean",
+            "title": "Is Verified"
+          },
+          "evidence_ref": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidence Ref"
+          },
+          "top_load_limit_g": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Top Load Limit G"
+          },
+          "allow_upright_90": {
+            "type": "boolean",
+            "title": "Allow Upright 90"
+          }
+        },
+        "type": "object",
+        "required": [
+          "product_id",
+          "code",
+          "units_per_package",
+          "length_mm",
+          "width_mm",
+          "height_mm",
+          "mass_g",
+          "id",
+          "revision",
+          "is_verified",
+          "evidence_ref",
+          "top_load_limit_g",
+          "allow_upright_90"
+        ],
+        "title": "PackagingUnitOut"
+      },
+      "PackagingVerification": {
+        "properties": {
+          "expected_revision": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Expected Revision"
+          },
+          "evidence_ref": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 3,
+            "title": "Evidence Ref"
+          },
+          "top_load_limit_g": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Top Load Limit G"
+          },
+          "allow_upright_90": {
+            "type": "boolean",
+            "title": "Allow Upright 90",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "expected_revision",
+          "evidence_ref"
+        ],
+        "title": "PackagingVerification"
+      },
+      "PalletTypeCreate": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Code"
+          },
+          "length_mm": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Length Mm"
+          },
+          "width_mm": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Width Mm"
+          },
+          "deck_height_mm": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Deck Height Mm"
+          },
+          "max_total_height_mm": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Max Total Height Mm"
+          },
+          "max_cargo_mass_g": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Max Cargo Mass G"
+          },
+          "tare_mass_g": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Tare Mass G"
+          },
+          "available_count": {
+            "type": "integer",
+            "maximum": 100.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Available Count"
+          },
+          "support_model": {
+            "type": "string",
+            "pattern": "^solid_deck$",
+            "title": "Support Model"
+          },
+          "evidence_ref": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 3,
+            "title": "Evidence Ref"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "length_mm",
+          "width_mm",
+          "deck_height_mm",
+          "max_total_height_mm",
+          "max_cargo_mass_g",
+          "tare_mass_g",
+          "available_count",
+          "support_model",
+          "evidence_ref"
+        ],
+        "title": "PalletTypeCreate"
+      },
+      "PalletTypeOut": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Code"
+          },
+          "length_mm": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Length Mm"
+          },
+          "width_mm": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Width Mm"
+          },
+          "deck_height_mm": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Deck Height Mm"
+          },
+          "max_total_height_mm": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Max Total Height Mm"
+          },
+          "max_cargo_mass_g": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Max Cargo Mass G"
+          },
+          "tare_mass_g": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Tare Mass G"
+          },
+          "available_count": {
+            "type": "integer",
+            "maximum": 100.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Available Count"
+          },
+          "support_model": {
+            "type": "string",
+            "pattern": "^solid_deck$",
+            "title": "Support Model"
+          },
+          "evidence_ref": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 3,
+            "title": "Evidence Ref"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "revision": {
+            "type": "integer",
+            "title": "Revision"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "length_mm",
+          "width_mm",
+          "deck_height_mm",
+          "max_total_height_mm",
+          "max_cargo_mass_g",
+          "tare_mass_g",
+          "available_count",
+          "support_model",
+          "evidence_ref",
+          "id",
+          "revision"
+        ],
+        "title": "PalletTypeOut"
+      },
+      "PlacementOut": {
+        "properties": {
+          "instance_id": {
+            "type": "string",
+            "title": "Instance Id"
+          },
+          "pallet_index": {
+            "type": "integer",
+            "title": "Pallet Index"
+          },
+          "x_mm": {
+            "type": "integer",
+            "title": "X Mm"
+          },
+          "y_mm": {
+            "type": "integer",
+            "title": "Y Mm"
+          },
+          "z_mm": {
+            "type": "integer",
+            "title": "Z Mm"
+          },
+          "orientation_code": {
+            "type": "string",
+            "title": "Orientation Code"
+          },
+          "length_mm": {
+            "type": "integer",
+            "title": "Length Mm"
+          },
+          "width_mm": {
+            "type": "integer",
+            "title": "Width Mm"
+          },
+          "height_mm": {
+            "type": "integer",
+            "title": "Height Mm"
+          },
+          "sku": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sku"
+          },
+          "mass_g": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mass G"
+          }
+        },
+        "type": "object",
+        "required": [
+          "instance_id",
+          "pallet_index",
+          "x_mm",
+          "y_mm",
+          "z_mm",
+          "orientation_code",
+          "length_mm",
+          "width_mm",
+          "height_mm"
+        ],
+        "title": "PlacementOut"
+      },
+      "PlanOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "run_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Run Id"
+          },
+          "shipment_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Shipment Id"
+          },
+          "input_hash": {
+            "type": "string",
+            "title": "Input Hash"
+          },
+          "layout_hash": {
+            "type": "string",
+            "title": "Layout Hash"
+          },
+          "validation_status": {
+            "type": "string",
+            "title": "Validation Status"
+          },
+          "validator_version": {
+            "type": "string",
+            "title": "Validator Version"
+          },
+          "instruction_version": {
+            "type": "string",
+            "title": "Instruction Version"
+          },
+          "layout": {
+            "$ref": "#/components/schemas/LayoutOut"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "run_id",
+          "shipment_id",
+          "input_hash",
+          "layout_hash",
+          "validation_status",
+          "validator_version",
+          "instruction_version",
+          "layout"
+        ],
+        "title": "PlanOut"
+      },
+      "PreflightOut": {
+        "properties": {
+          "ready": {
+            "type": "boolean",
+            "title": "Ready"
+          },
+          "blockers": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Blockers"
+          },
+          "requested_units": {
+            "type": "integer",
+            "title": "Requested Units"
+          },
+          "requested_cartons": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Requested Cartons"
+          }
+        },
+        "type": "object",
+        "required": [
+          "ready",
+          "blockers",
+          "requested_units",
+          "requested_cartons"
+        ],
+        "title": "PreflightOut"
+      },
+      "PreflightRequest": {
+        "properties": {
+          "pallet_type_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Pallet Type Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "pallet_type_id"
+        ],
+        "title": "PreflightRequest"
+      },
+      "ProductCreate": {
+        "properties": {
+          "sku": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Sku"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Name"
+          }
+        },
+        "type": "object",
+        "required": [
+          "sku",
+          "name"
+        ],
+        "title": "ProductCreate"
+      },
+      "ProductOut": {
+        "properties": {
+          "sku": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Sku"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Name"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "revision": {
+            "type": "integer",
+            "title": "Revision"
+          },
+          "is_active": {
+            "type": "boolean",
+            "title": "Is Active"
+          }
+        },
+        "type": "object",
+        "required": [
+          "sku",
+          "name",
+          "id",
+          "revision",
+          "is_active"
+        ],
+        "title": "ProductOut"
+      },
+      "RunCreate": {
+        "properties": {
+          "pallet_type_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Pallet Type Id"
+          },
+          "expected_shipment_revision": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Expected Shipment Revision"
+          },
+          "strategy": {
+            "type": "string",
+            "enum": [
+              "quick",
+              "best_fit"
+            ],
+            "title": "Strategy",
+            "default": "quick"
+          },
+          "evaluation_budget": {
+            "type": "integer",
+            "maximum": 2000000.0,
+            "minimum": 1.0,
+            "title": "Evaluation Budget",
+            "default": 250000
+          }
+        },
+        "type": "object",
+        "required": [
+          "pallet_type_id",
+          "expected_shipment_revision"
+        ],
+        "title": "RunCreate"
+      },
+      "RunOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "shipment_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Shipment Id"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "termination_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Termination Reason"
+          },
+          "error_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error Code"
+          },
+          "plan_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Plan Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "shipment_id",
+          "status",
+          "termination_reason",
+          "error_code",
+          "plan_id"
+        ],
+        "title": "RunOut"
+      },
+      "SearchOut": {
+        "properties": {
+          "termination_reason": {
+            "type": "string",
+            "title": "Termination Reason"
+          },
+          "evaluations_completed": {
+            "type": "integer",
+            "title": "Evaluations Completed"
+          },
+          "candidates_completed": {
+            "type": "integer",
+            "title": "Candidates Completed",
+            "default": 1
+          },
+          "strategy": {
+            "type": "string",
+            "enum": [
+              "quick",
+              "best_fit"
+            ],
+            "title": "Strategy",
+            "default": "quick"
+          }
+        },
+        "type": "object",
+        "required": [
+          "termination_reason",
+          "evaluations_completed"
+        ],
+        "title": "SearchOut"
+      },
+      "ShipmentCreate": {
+        "properties": {
+          "shipment_ref": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Shipment Ref"
+          },
+          "lines": {
+            "items": {
+              "$ref": "#/components/schemas/OrderLineCreate"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Lines"
+          }
+        },
+        "type": "object",
+        "required": [
+          "shipment_ref",
+          "lines"
+        ],
+        "title": "ShipmentCreate"
+      },
+      "ShipmentOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "order_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Order Id"
+          },
+          "shipment_ref": {
+            "type": "string",
+            "title": "Shipment Ref"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "revision": {
+            "type": "integer",
+            "title": "Revision"
+          },
+          "lines": {
+            "items": {
+              "$ref": "#/components/schemas/OrderLineOut"
+            },
+            "type": "array",
+            "title": "Lines"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "order_id",
+          "shipment_ref",
+          "status",
+          "revision",
+          "lines"
+        ],
+        "title": "ShipmentOut"
+      },
+      "UnplacedOut": {
+        "properties": {
+          "instance_id": {
+            "type": "string",
+            "title": "Instance Id"
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason"
+          },
+          "sku": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sku"
+          }
+        },
+        "type": "object",
+        "required": [
+          "instance_id",
+          "reason"
+        ],
+        "title": "UnplacedOut"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

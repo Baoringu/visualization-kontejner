@@ -1,0 +1,35 @@
+# Local agent/project instructions and private working documentation
+AGENTS.md
+CODEX_START.md
+
+# Internal project documentation shown in the local docs folder
+docs/*
+docs/adr/
+docs/benchmarks-phase4.md
+docs/capability-matrix.md
+docs/database-schema-decision.md
+docs/equipment-reference.md
+docs/implementation-status.md
+docs/PALLET_BUILDING_SPEC.md
+docs/repository-audit.md
+
+# README screenshots are intentionally kept in the repository
+!docs/screenshots/
+!docs/screenshots/**
+
+# Local environments and generated files
+.env
+.env.*
+!.env.example
+.venv/
+__pycache__/
+*.py[cod]
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.next/
+node_modules/
+dist/
+build/
+*.tsbuildinfo
+.DS_Store
